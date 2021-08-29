@@ -1,0 +1,36 @@
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+mat-card {
+  margin: auto;
+  padding: 60px 30px;
+  width: 65%;
+  mat-card-title {
+    text-align: center;
+    font-size: x-large;
+  }
+  mat-card-content {
+    display: flex;
+    justify-content: center;
+    
+    form {
+      font-size: x-large;
+      width: 60%;
+
+      table {
+        width: 100%;
+        .mat-form-field {
+          width: 100%;
+        }
+      }
+      .mat-raised-button{
+        margin-top: 20px;
+        width: 100%;
+      }
+    }
+  }
+}

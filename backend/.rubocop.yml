@@ -36,6 +36,7 @@ Rails/FilePath:
     - 'lib/tasks/dev.rake'
     - 'spec/rails_helper.rb'
     - 'config/environments/development.rb'
+    - 'config/application.rb'
 
 ## `and return` の形式を利用できるようにします。基本的には、&& と || を使います。
 Style/AndOr:
