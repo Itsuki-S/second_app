@@ -17,7 +17,6 @@ jobs:
         docker-compose run backend rails db:create
     env:
         RAILS_ENV: test
-
     - name: Rspec
       run:  |
         docker-compose run backend bundle exec rspec
