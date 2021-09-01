@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class AccountService {
+export class RegisterService {
 
   constructor(
     private httpClient: HttpClient,

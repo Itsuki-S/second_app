@@ -1,13 +1,11 @@
 import { LayoutModule } from '@angular/cdk/layout';
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
-
+import { MaterialModule } from 'src/app/material.module';
 import { NavComponent } from './nav.component';
+import { SessionService } from 'src/app/services/session.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('NavComponent', () => {
   let component: NavComponent;
@@ -15,15 +13,16 @@ describe('NavComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      schemas: [NO_ERRORS_SCHEMA],
       declarations: [NavComponent],
       imports: [
         NoopAnimationsModule,
         LayoutModule,
-        MatButtonModule,
-        MatIconModule,
-        MatListModule,
-        MatSidenavModule,
-        MatToolbarModule,
+        MaterialModule,
+        RouterTestingModule,
+      ],
+      providers: [
+        { provide: SessionService, useClass: MockSessionService },
       ]
     }).compileComponents();
   }));
@@ -38,3 +37,7 @@ describe('NavComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+export class MockSessionService {
+  public destroy(){}
+}

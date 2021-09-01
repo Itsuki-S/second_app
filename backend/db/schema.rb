@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 2021_08_12_062140) do
     t.integer "user_id", null: false
     t.string "youtube_url", null: false
     t.string "youtube_title"
-    t.string "youtube_duration"
+    t.integer "youtube_duration"
     t.boolean "is_recommended?", default: false, null: false
     t.string "note"
     t.time "date", null: false

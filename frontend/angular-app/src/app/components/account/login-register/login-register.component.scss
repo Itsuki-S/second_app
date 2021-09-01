@@ -5,10 +5,15 @@
   z-index: 1;
 }
 
+.grid-container {
+  margin: 20px;
+}
+
 mat-card {
-  margin: auto;
+  position: absolute;
   padding: 60px 30px;
-  width: 65%;
+  min-width: 350px;
+
   mat-card-title {
     text-align: center;
     font-size: x-large;

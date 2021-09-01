@@ -1,9 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
 import { SessionService } from 'src/app/services/session.service';
-import { AccountService } from 'src/app/services/account.service';
+import { RegisterService } from 'src/app/services/register.service';
 import { LoginUser, RegisterUser } from './models/user';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -12,8 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './login-register.component.html',
   styleUrls: ['./login-register.component.scss']
 })
-export class LoginRegisterComponent implements OnInit {
-  private subscription: Subscription[] = [];
+export class LoginRegisterComponent {
   public loginUser: LoginUser = { email: '', password: ''  };
   public registerUser: RegisterUser = { 
                         name: '',
@@ -24,17 +21,10 @@ export class LoginRegisterComponent implements OnInit {
   public form: NgForm;
 
   constructor(
-    private router: Router,
     private snackBar: MatSnackBar,
     private sessionService: SessionService,
-    private accountService: AccountService,
+    private registerService: RegisterService,
   ) { }
-
-  ngOnInit(): void {
-  }
-
-  ngOnDestroy() {
-  }
 
   onLoginSubmit(form: NgForm): void {
     this.sessionService.create(form.value).subscribe(
@@ -48,7 +38,7 @@ export class LoginRegisterComponent implements OnInit {
 
   onRegisterSubmit(form: NgForm): void {
     if(form.value.password == form.value.password_confirmation){
-      this.accountService.createNewAccount(form.value).subscribe(
+      this.registerService.createNewAccount(form.value).subscribe(
         success => {
           this.openSnackBar('Confimation mail is sent. Please confirm account')
         },
@@ -73,5 +63,3 @@ export class LoginRegisterComponent implements OnInit {
     });
   }
 }
-
-

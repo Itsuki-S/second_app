@@ -19,24 +19,9 @@ export class SessionService {
     private httpClient: HttpClient,
     private router: Router,
     private cookieService: CookieService,
-  ) {}
-
-  public setSession(response: any) {
-    const secureFlag = location.protocol === 'https:' ? true : false;
-    this.deleteCookie()
-    this.cookieService.set('access-token', response.headers.get('access-token'), 14, '/', undefined, secureFlag, 'Lax' );
-    this.cookieService.set('uid', response.headers.get('uid'), 14, '/', undefined, secureFlag, 'Lax');
-    this.cookieService.set('client', response.headers.get('client'), 14, '/', undefined, secureFlag, 'Lax');
-
-    this.router.navigateByUrl('/panel/dashboard')
-  }
-
-  private deleteCookie(){
-    this.cookieService.delete('access-token', '/')
-    this.cookieService.delete('uid', '/')
-    this.cookieService.delete('client', '/')
-  }
-  
+    ) {}
+    
+  // ログインリクエストをAPIに送る
   public create(body: Object): Observable<any> {
     return this.httpClient.post(
       environment.apiUrl+'/auth/sign_in',
@@ -47,13 +32,33 @@ export class SessionService {
           this.setSession(response);
         })
       );
-  }
-
+    }
+  
+  // ログアウト
   public destroy() {
     this.deleteCookie()
     this.router.navigateByUrl(this.afterlogoutUrl)
   }
 
+  // APIから送られてきたaccess-token・uid・clientをcookieに保存
+  public setSession(response: any) {
+    const secureFlag = location.protocol === 'https:' ? true : false;
+    this.deleteCookie()
+    this.cookieService.set('access-token', response.headers.get('access-token'), 14, '/', undefined, secureFlag, 'Lax' );
+    this.cookieService.set('uid', response.headers.get('uid'), 14, '/', undefined, secureFlag, 'Lax');
+    this.cookieService.set('client', response.headers.get('client'), 14, '/', undefined, secureFlag, 'Lax');
+
+    this.router.navigateByUrl('/panel/dashboard')
+  }
+
+  // cookieからaccess-token・uid・clientを削除
+  private deleteCookie(){
+    this.cookieService.delete('access-token', '/')
+    this.cookieService.delete('uid', '/')
+    this.cookieService.delete('client', '/')
+  }
+
+  // 
   private checkToken(accessToken: string, uid: string, client: string): Observable<any> {
     const option = {
       headers: new HttpHeaders().set('access-token', accessToken).set('uid', uid).set('client', client),
@@ -66,6 +71,7 @@ export class SessionService {
     )
   }
 
+  // authenticated.guardのためにログイン状態にあることを確認する
   public authCheck(): Observable<boolean> {
     let accessToken = this.cookieService.get('access-token');
     let uid = this.cookieService.get('uid');
@@ -87,6 +93,7 @@ export class SessionService {
     }
   }
 
+  // authentication.guardのために非ログイン状態にあることを確認する
   public notAuthCheck(): Observable<boolean> {
     let accessToken = this.cookieService.get('access-token');
     let uid = this.cookieService.get('uid');
