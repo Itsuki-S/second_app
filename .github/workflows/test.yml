@@ -1,0 +1,31 @@
+name: Test
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1 
+    - name: Setup docker
+      shell: bash
+      run: |
+        docker-compose build
+        docker-compose up -d
+        docker-compose run backend rails db:create
+    env:
+        RAILS_ENV: test
+
+    - name: Rspec
+      run:  |
+        docker-compose run backend bundle exec rspec
+      env:
+        RAILS_ENV: test
+
+    - name: Unit Test
+      run:  |
+        docker-compose exec frontend bash
+        cd angular-app/
+        ng test --no-watch
