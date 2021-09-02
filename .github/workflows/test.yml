@@ -1,27 +1,27 @@
-name: Test
+# name: Test
 
-on:
-  push:
+# on:
+#   push:
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v1 
-    - name: Setup docker
-      shell: bash
-      run: |
-        docker-compose build
-        docker-compose run backend rails db:create
-    - name: Rspec
-      run:  |
-        docker-compose run backend bundle exec rspec
-      env:
-        RAILS_ENV: test
+#     steps:
+#     - uses: actions/checkout@v1 
+#     - name: Setup docker
+#       shell: bash
+#       run: |
+#         docker-compose build
+#         docker-compose run backend rails db:create
+#     - name: Rspec
+#       run:  |
+#         docker-compose run backend bundle exec rspec
+#       env:
+#         RAILS_ENV: test
 
-    - name: Unit Test
-      run:  |
-        docker-compose exec frontend bash
-        cd angular-app/
-        ng test --no-watch
+#     - name: Unit Test
+#       run:  |
+#         docker-compose exec frontend bash
+#         cd angular-app/
+#         ng test --no-watch
