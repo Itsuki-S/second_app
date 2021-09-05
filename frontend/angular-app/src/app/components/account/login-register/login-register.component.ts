@@ -1,16 +1,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { NgForm } from '@angular/forms';
 import { SessionService } from 'src/app/services/session.service';
 import { RegisterService } from 'src/app/services/register.service';
 import { LoginUser, RegisterUser } from './models/user';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Breakpoints, BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login-register.component.html',
   styleUrls: ['./login-register.component.scss']
 })
-export class LoginRegisterComponent {
+export class LoginRegisterComponent implements OnInit {
   public loginUser: LoginUser = { email: '', password: ''  };
   public registerUser: RegisterUser = { 
                         name: '',
@@ -19,12 +22,28 @@ export class LoginRegisterComponent {
                         password_confirmation: ''
                       }
   public form: NgForm;
+  public isMobile$: Observable<boolean> = of(false);
+  public cardCol: number;
 
   constructor(
     private snackBar: MatSnackBar,
     private sessionService: SessionService,
     private registerService: RegisterService,
-  ) { }
+    private breakpointObserver: BreakpointObserver
+  ) {}
+
+  ngOnInit() {
+    this.isMobile$ = this.breakpointObserver.observe(Breakpoints.XSmall).pipe(
+      map((state: BreakpointState) => state.matches)
+    );
+    this.isMobile$.subscribe((isMobile: boolean) => {
+      if(isMobile){
+        this.cardCol=2
+      } else {
+        this.cardCol=1
+      }
+    });
+  }
 
   onLoginSubmit(form: NgForm): void {
     this.sessionService.create(form.value).subscribe(

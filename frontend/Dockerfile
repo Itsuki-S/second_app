@@ -11,4 +11,3 @@ RUN mkdir /frontend
 WORKDIR /frontend
 RUN npm install @angular-devkit/build-angular
 RUN npm install -g @angular/cli
-

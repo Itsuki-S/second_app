@@ -16,8 +16,8 @@ export class SessionService {
   private afterlogoutUrl: string = '/account/login-register';
 
   constructor(
+    public router: Router,
     private httpClient: HttpClient,
-    private router: Router,
     private cookieService: CookieService,
     ) {}
     
@@ -28,7 +28,7 @@ export class SessionService {
       body, 
       {headers: new HttpHeaders().set('X-Requested-With', 'XMLHttpRequest').set('content-type','application/json'), observe: 'response'}
     ).pipe(
-        map( response => {
+        map(response => {
           this.setSession(response);
         })
       );
@@ -44,7 +44,7 @@ export class SessionService {
   public setSession(response: any) {
     const secureFlag = location.protocol === 'https:' ? true : false;
     this.deleteCookie()
-    this.cookieService.set('access-token', response.headers.get('access-token'), 14, '/', undefined, secureFlag, 'Lax' );
+    this.cookieService.set('access-token', response.headers.get('access-token'), 14, '/', undefined, secureFlag, 'Lax');
     this.cookieService.set('uid', response.headers.get('uid'), 14, '/', undefined, secureFlag, 'Lax');
     this.cookieService.set('client', response.headers.get('client'), 14, '/', undefined, secureFlag, 'Lax');
 
@@ -64,55 +64,27 @@ export class SessionService {
       headers: new HttpHeaders().set('access-token', accessToken).set('uid', uid).set('client', client),
       observe: 'response' as const
     };
-    return this.httpClient.get(environment.apiUrl+'/auth/validate_token', option).pipe(
-      map(() => {
-        return true;
-      })
-    )
+    return this.httpClient.get(environment.apiUrl+'/auth/validate_token', option)
   }
 
-  // authenticated.guardのためにログイン状態にあることを確認する
+  // authentication.guardとauthenticated.guardのためにログイン状態にあることを確認する
   public authCheck(): Observable<boolean> {
     let accessToken = this.cookieService.get('access-token');
     let uid = this.cookieService.get('uid');
     let client = this.cookieService.get('client');
     if(accessToken && uid && client) {
       return this.checkToken(accessToken, uid, client).pipe(
-        switchMap(res => {
-          if(res === true) {
-            return of(true);
-          } else {
-            this.destroy();
-            return of(false);
-          }
-        })
-      )
-    } else {
-      this.destroy();
-      return of(false);
-    }
-  }
-
-  // authentication.guardのために非ログイン状態にあることを確認する
-  public notAuthCheck(): Observable<boolean> {
-    let accessToken = this.cookieService.get('access-token');
-    let uid = this.cookieService.get('uid');
-    let client = this.cookieService.get('client');
-    if(accessToken && uid && client) {
-      return this.checkToken(accessToken, uid, client).pipe(
-        switchMap(res => {
-          if(res === true) {
-            this.router.navigateByUrl(this.afterloginUrl)
-            return of(false);
-          } else {
-            this.deleteCookie();
-            return of(true);
-          }
+        switchMap(() => {
+          return of(true);
+        }),
+        catchError(() => {
+          this.deleteCookie();
+          return of(false);
         })
       )
     } else {
       this.deleteCookie();
-      return of(true);
+      return of(false);
     }
   }
 }

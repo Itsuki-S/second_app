@@ -12,10 +12,11 @@
 mat-card {
   position: absolute;
   padding: 60px 30px;
-  min-width: 350px;
+  width: 60%;
+  min-width: 325px;
 
   mat-card-title {
-    text-align: center;
+    margin-left: 10px;
     font-size: x-large;
   }
   mat-card-content {
@@ -23,7 +24,7 @@ mat-card {
     justify-content: center;
     
     form {
-      font-size: x-large;
+      font-size: large;
       width: 60%;
 
       table {

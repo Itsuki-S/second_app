@@ -15,7 +15,7 @@ export class RegisterService {
   ) {}
 
   public createNewAccount(body: {[k: string]: any}): Observable<any> {
-    body.confirm_success_url = "http://localhost:4200/account/login-register";
+    body.confirm_success_url = window.location;
     return this.httpClient.post(
       environment.apiUrl+'/auth',
       body, 

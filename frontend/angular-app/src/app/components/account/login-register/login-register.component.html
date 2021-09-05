@@ -4,7 +4,7 @@
 
 <div class="grid-container">
 <mat-grid-list cols="2" rowHeight="700px">
- <mat-grid-tile rowspan="1">
+ <mat-grid-tile rowspan="1" colspan="{{cardCol}}">
    <mat-card class="card login">
      <mat-card-header>
        <mat-card-title>Login</mat-card-title>
@@ -43,7 +43,7 @@
      </mat-card-content>
    </mat-card>
  </mat-grid-tile>
- <mat-grid-tile rowspan="1">
+ <mat-grid-tile rowspan="1" colspan="{{cardCol}}">
   <mat-card class="card sign-up">
     <mat-card-header>
       <mat-card-title>Sign Up</mat-card-title>
