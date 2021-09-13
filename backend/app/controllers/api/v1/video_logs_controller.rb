@@ -3,10 +3,10 @@
 module Api
   module V1
     class VideoLogsController < ApplicationController
-      before_action :authenticate_api_user!
+      before_action :authenticate_api_v1_user!
 
       def index
-        video_logs = VideoLogs.order(created_at: :desc)
+        video_logs = VideoLog.order(created_at: :desc)
         render json: { status: 'SUCCESS', message: 'Loaded logs', data: video_logs }
       end
 
@@ -14,22 +14,23 @@ module Api
         succeeded_logs = []
         failed_logs = []
         video_logs_params.each do |params|
-          video_log = VideoLog.new(params)
-          if video_log.save
-            succeeded_logs << video_log
+          logic = VideoLogsLogic::Create.new(current_api_v1_user)
+          result = logic.run(params)
+          if result[:errors].nil?
+            succeeded_logs << result
           else
-            failed_logs << { video_log: video_log, errors: video_log.errors }
+            failed_logs << result
           end
         end
 
         if failed_logs.empty?
-          render json: {
-            status: 'SUCCESS',
+          render status: :ok, json: {
+            status: 200,
             data: { success: succeeded_logs }
           }
         else
-          render json: {
-            status: 'ERROR',
+          render status: :bad_request, json: {
+            status: 400,
             data: {
               success: succeeded_logs,
               failure: failed_logs
@@ -41,7 +42,7 @@ module Api
       private
 
         def video_logs_params
-          params.require(:video_logs).map { |u| u.permit(:youtube_url, :youtube_title, :youtube_duration, :is_recommended?, :note, :date, :user_id) }
+          params.require(:video_logs).map { |u| u.permit(:youtube_url, :youtube_title, :youtube_duration, :is_recommended?, :note, :user_id) }
         end
     end
   end

@@ -7,7 +7,6 @@ class CreateVideoLogs < ActiveRecord::Migration[6.1]
       t.integer :youtube_duration
       t.boolean :is_recommended?, default: false, null: false
       t.string :note
-      t.time :date, null: false
 
       t.timestamps
     end

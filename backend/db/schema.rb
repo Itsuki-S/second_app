@@ -44,7 +44,6 @@ ActiveRecord::Schema.define(version: 2021_08_12_062140) do
     t.integer "youtube_duration"
     t.boolean "is_recommended?", default: false, null: false
     t.string "note"
-    t.time "date", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["is_recommended?"], name: "index_video_logs_on_is_recommended?"
