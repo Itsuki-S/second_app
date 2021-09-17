@@ -7,6 +7,7 @@ import { PageNotFoundComponent } from './components/error/page-not-found/page-no
 import { AccountModule } from './components/account/account.module';
 import { AuthenticationGuard } from './authentication.guard';
 import { AuthenticatedGuard } from './authenticated.guard';
+import { LogRegisterComponent } from './components/log-register/log-register.component';
 
 const routes: Routes = [ 
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'user', component: UserComponent },
+      { path: 'log-register', component: LogRegisterComponent}
     ]
   },
   { path: '**', component: PageNotFoundComponent },

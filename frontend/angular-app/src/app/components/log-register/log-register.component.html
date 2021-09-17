@@ -1,0 +1,31 @@
+<div class="container">
+  <h1 class="mat-h1">ログを記録する</h1>
+  <form [formGroup]="videoLogsForm">
+    <div formArrayName="video_logs">
+      <div *ngFor="let videoLog of videoLogs.controls; let i = index" [formGroupName]="i">
+        <mat-expansion-panel [disabled]="true" [expanded]="videoLogsForm.value.video_logs[i]['is_recommended?']">
+          <mat-expansion-panel-header>
+            <mat-form-field appearance="fill" class="url">
+              <mat-label>Youtube URL</mat-label>
+              <input matInput type="text" 
+              formControlName="youtube_url" 
+              required 
+              pattern="https?://[\w!\?/\+\-_~=;\.,\*&@#\$%\(\)'\[\]]+"
+              >
+            </mat-form-field>
+            <mat-checkbox formControlName="is_recommended?">
+              他人におすすめする
+            </mat-checkbox>
+            <button mat-button type="button" (click)="deleteVideoLogForm(i)">削除する</button>
+          </mat-expansion-panel-header>
+          <mat-form-field appearance="fill" class="recommendation">
+            <mat-label>紹介文</mat-label>
+            <input matInput type="text" formControlName="note">
+          </mat-form-field>
+        </mat-expansion-panel>
+      </div>
+    </div>
+    <button mat-raised-button class="add-button" type="button" (click)="addVideoLogForm()">欄を追加する</button>
+    <button mat-raised-button class="submit-button" color="primary" type="button" (click)="onSubmit()" [disabled]="videoLogsForm.status == 'INVALID'">登録する</button>
+  </form>
+</div>
