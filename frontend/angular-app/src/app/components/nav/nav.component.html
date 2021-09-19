@@ -5,9 +5,10 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item [routerLink]="['/panel/dashboard']">Top</a>
-      <a mat-list-item [routerLink]="['/panel/user']">User</a>
-      <a mat-list-item href="#">Help</a>
+      <a mat-list-item [routerLink]="['/panel/dashboard']">トップ</a>
+      <a mat-list-item [routerLink]="['/panel/user']">ユーザー情報</a>
+      <a mat-list-item [routerLink]="['/panel/log-register']">ログ登録</a>
+      <a mat-list-item href="#">ヘルプ</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

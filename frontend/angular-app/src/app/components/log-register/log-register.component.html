@@ -26,6 +26,6 @@
       </div>
     </div>
     <button mat-raised-button class="add-button" type="button" (click)="addVideoLogForm()">欄を追加する</button>
-    <button mat-raised-button class="submit-button" color="primary" type="button" (click)="onSubmit()" [disabled]="videoLogsForm.status == 'INVALID'">登録する</button>
+    <button mat-raised-button class="submit-button" color="primary" type="button" (click)="onSubmit()" [disabled]="videoLogsForm.status == 'INVALID' || videoLogsForm.value.video_logs.length == 0">登録する</button>
   </form>
 </div>
