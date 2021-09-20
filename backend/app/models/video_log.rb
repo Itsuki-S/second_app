@@ -22,4 +22,8 @@ class VideoLog < ApplicationRecord
     end
     self.youtube_duration = duration
   end
+
+  def setting_youtube_id(youtube_url)
+    self.youtube_id = youtube_url.sub('https://www.youtube.com/watch?v=', '').sub('https://youtu.be/', '').split('&')[0]
+  end
 end

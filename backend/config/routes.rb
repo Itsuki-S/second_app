@@ -9,6 +9,7 @@ Rails.application.routes.draw do
         registrations: 'api/v1/auth/registrations'
       }
       resources :video_logs
+      get '/recommended_video_logs', to: 'video_logs#recommended_video_logs'
     end
   end
   # mount_devise_token_auth_for 'User', at: 'auth'

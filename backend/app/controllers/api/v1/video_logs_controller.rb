@@ -6,8 +6,13 @@ module Api
       before_action :authenticate_api_v1_user!
 
       def index
-        video_logs = VideoLog.order(created_at: :desc)
+        video_logs = current_api_v1_user.video_logs.order(created_at: :desc)
         render json: { status: 'SUCCESS', message: 'Loaded logs', data: video_logs }
+      end
+
+      def recommended_video_logs
+        recommended_video_logs = VideoLog.where(is_recommended?: true).order(created_at: :desc)
+        render json: { status: 'SUCCESS', message: 'Loaded logs', data: recommended_video_logs }
       end
 
       def create
@@ -42,7 +47,7 @@ module Api
       private
 
         def video_logs_params
-          params.require(:video_logs).map { |u| u.permit(:youtube_url, :youtube_title, :youtube_duration, :is_recommended?, :note, :user_id) }
+          params.require(:video_logs).map { |u| u.permit(:youtube_url, :youtube_title, :youtube_duration, :is_recommended?, :youtube_id, :note, :user_id) }
         end
     end
   end

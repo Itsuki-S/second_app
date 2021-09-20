@@ -3,6 +3,7 @@ class CreateVideoLogs < ActiveRecord::Migration[6.1]
     create_table :video_logs do |t|
       t.integer :user_id, null: false
       t.string :youtube_url, null: false
+      t.string :youtube_id, null: false
       t.string :youtube_title
       t.integer :youtube_duration
       t.boolean :is_recommended?, default: false, null: false

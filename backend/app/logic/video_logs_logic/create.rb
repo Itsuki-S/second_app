@@ -16,9 +16,10 @@ module VideoLogsLogic
     def run(params)
       video_log = @current_user.video_logs.build(params)
       # youtube動画のid取得
-      video_id = video_log.youtube_url.sub('https://www.youtube.com/watch?v=', '').sub('https://youtu.be/', '').split('&')[0]
+      video_log.setting_youtube_id(params[:youtube_url])
+      # video_id = video_log.youtube_url.sub('https://www.youtube.com/watch?v=', '').sub('https://youtu.be/', '').split('&')[0]
       # youtube APIの呼び出しとレスポンスの代入
-      response = @service.list_videos('snippet, contentDetails', id: video_id)
+      response = @service.list_videos('snippet, contentDetails', id: video_log.youtube_id)
 
       # レスポンスが空である場合はfailureに入れる
       if response.items.empty?

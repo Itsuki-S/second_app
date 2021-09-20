@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2021_08_12_062140) do
   create_table "video_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "youtube_url", null: false
+    t.string "youtube_id", null: false
     t.string "youtube_title"
     t.integer "youtube_duration"
     t.boolean "is_recommended?", default: false, null: false
