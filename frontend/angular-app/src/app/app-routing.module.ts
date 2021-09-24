@@ -8,6 +8,7 @@ import { AccountModule } from './components/account/account.module';
 import { AuthenticationGuard } from './authentication.guard';
 import { AuthenticatedGuard } from './authenticated.guard';
 import { LogRegisterComponent } from './components/log-register/log-register.component';
+import { LogListComponent } from './components/log-list/log-list.component';
 
 const routes: Routes = [ 
   {
@@ -19,7 +20,8 @@ const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'user', component: UserComponent },
-      { path: 'log-register', component: LogRegisterComponent}
+      { path: 'log-register', component: LogRegisterComponent},
+      { path: 'log-list', component: LogListComponent}
     ]
   },
   { path: '**', component: PageNotFoundComponent },

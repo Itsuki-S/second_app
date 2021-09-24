@@ -16,11 +16,18 @@ export class VideoLogService {
     private cookieService: CookieService,
   ) {}
 
-  public createNewVideoLog(body: Object): Observable<any> {
+  public createNewVideoLogs(body: Object): Observable<any> {
     return this.httpClient.post(
       environment.apiUrl+'/video_logs',
       body,
-      {headers: this.setHeader(), observe: 'response'}
+      { headers: this.setHeader(), observe: 'response' }
+    )
+  }
+
+  public getUserVideoLogs(date_str: string): Observable<any> {
+    return this.httpClient.get(
+      environment.apiUrl+'/video_logs',
+      { headers: this.setHeader(), params: {date_param: date_str}, observe: 'response' }
     )
   }
 

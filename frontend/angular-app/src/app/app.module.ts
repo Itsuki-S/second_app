@@ -4,6 +4,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule, Routes } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MaterialModule } from './material.module';
+import { YouTubePlayerModule } from '@angular/youtube-player';
 
 import { CookieService } from 'ngx-cookie-service';
 
@@ -14,12 +18,10 @@ import { UserComponent } from './components/user/user.component';
 import { PageNotFoundComponent } from './components/error/page-not-found/page-not-found.component';
 import { NavComponent } from './components/nav/nav.component';
 
-import { CommonModule } from '@angular/common';
-import { LayoutModule } from '@angular/cdk/layout';
 import { LoginRegisterComponent } from './components/account/login-register/login-register.component';
 import { PanelComponent } from './components/panel/panel.component';
-import { MaterialModule } from './material.module';
 import { LogRegisterComponent } from './components/log-register/log-register.component';
+import { LogListComponent } from './components/log-list/log-list.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { LogRegisterComponent } from './components/log-register/log-register.com
     LoginRegisterComponent,
     PanelComponent,
     LogRegisterComponent,
+    LogListComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -43,6 +46,7 @@ import { LogRegisterComponent } from './components/log-register/log-register.com
     RouterModule,
     LayoutModule,
     MaterialModule,
+    YouTubePlayerModule,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

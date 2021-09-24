@@ -6,7 +6,12 @@ module Api
       before_action :authenticate_api_v1_user!
 
       def index
-        video_logs = current_api_v1_user.video_logs.order(created_at: :desc)
+        video_logs = if params[:date_param].present?
+                       date = params[:date_param].in_time_zone
+                       current_api_v1_user.video_logs.where(created_at: date.all_day).order(created_at: :desc)
+                     else
+                       current_api_v1_user.video_logs.order(created_at: :desc)
+                     end
         render json: { status: 'SUCCESS', message: 'Loaded logs', data: video_logs }
       end
 

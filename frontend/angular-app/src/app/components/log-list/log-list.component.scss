@@ -1,0 +1,51 @@
+.container {
+  margin: 20px;
+
+  .video-logs-header{
+    display: flex;
+
+    mat-form-field{
+      margin: 0 auto;
+    }
+  }
+
+  .video-log-card {
+    margin: 0 20px 20px;
+
+    .oval {
+      width: 180px;
+      height: 32px;
+      background: rgb(54, 175, 125);
+      border-radius: 40px;
+      margin: 0 auto 10px;
+      text-align: center;
+      
+      h2 {
+        margin: 0;
+        font-weight: bold;
+        color: #fff;
+      }
+    }
+
+    .video-log-content {
+      display: flex;
+      
+      table {
+        width: 100%;
+        margin-left: 10px;
+        border-collapse:  collapse;
+
+        td, th  {
+          border-bottom: 1px gray solid;
+        }
+
+        th { 
+          width: 20%;
+        }
+        td {
+          width: 80%;
+        }
+      } 
+    }
+  }
+}

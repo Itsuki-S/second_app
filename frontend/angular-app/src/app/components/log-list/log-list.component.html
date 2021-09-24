@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="video-logs-header">
+    <h1 class="mat-h1">
+      視聴履歴
+    </h1>
+    <mat-form-field appearance="fill">
+      <mat-label>日にちを選ぶ</mat-label>
+      <input matInput [matDatepicker]="picker" [formControl]=logsDate readonly>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <h2 class="mat-h2">
+      合計:{{videoTotalHour}}時間{{videoTotalMin}}分{{videoTotalSec}}秒
+    </h2>
+  </div>
+  <div class="video-log-sector" *ngFor="let videoLog of videoLogs">
+    <mat-card class="video-log-card">
+      <div *ngIf=videoLog.is_recommended>
+        <div class="oval" mat-color="primary">
+          <h2>オススメ！</h2>
+        </div>
+      </div>
+      <div class="video-log-content">
+        <a href="{{videoLog.youtube_url}}" target="_blank">
+          <img class="ythumb" src="https://img.youtube.com/vi/{{videoLog.youtube_id}}/mqdefault.jpg"/>
+        </a>
+        <table>
+          <tr>
+            <th>動画タイトル</th>
+            <td>{{videoLog.youtube_title}}</td>
+          </tr>
+          <tr>
+            <th>動画時間</th>
+            <td>{{videoLog.youtube_duration_str}}</td>
+          </tr>
+          <tr>
+            <th>動画URL</th>
+            <td>
+              <a href="{{videoLog.youtube_url}}" target="_blank">
+                {{videoLog.youtube_url}}
+              </a>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </mat-card>
+  </div>
+  <div *ngIf="videoLogsEmpty">この日はログが登録されていません</div>
+</div>

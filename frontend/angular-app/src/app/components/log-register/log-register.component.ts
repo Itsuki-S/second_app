@@ -49,7 +49,7 @@ export class LogRegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.videoLogService.createNewVideoLog(this.videoLogsForm.value).subscribe(
+    this.videoLogService.createNewVideoLogs(this.videoLogsForm.value).subscribe(
       success => {
         this.videoLogsForm = this.formBuilder.group({
           video_logs: this.formBuilder.array([])
