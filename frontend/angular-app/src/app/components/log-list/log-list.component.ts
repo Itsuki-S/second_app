@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { VideoLog } from './models/videoLog';
 import { VideoLogsLogic } from './logic/video-logs.logic';
+import { VideoLogService } from 'src/app/services/video-log.service';
 
 @Component({
   selector: 'app-log-list',
@@ -20,14 +21,14 @@ export class LogListComponent implements OnInit, OnDestroy {
   public videoLogsEmpty: boolean = true;
   
   constructor(
-    private videoLogsLogic: VideoLogsLogic
+    private videoLogsLogic: VideoLogsLogic,
+    private videoLogService: VideoLogService
   ) {}
 
   ngOnInit(): void {
     const formSubscription = this.logsDate.valueChanges.subscribe(value => {
       this.videoTotalTime = 0;
       this.videoLogsLogic.get(value.toLocaleString());
-      console.log(this.logsDate.value.toLocaleString())
     });
     
     const videoLogsSubscription = this.videoLogsLogic.data$.subscribe((videoLogs: any) => {
@@ -50,5 +51,14 @@ export class LogListComponent implements OnInit, OnDestroy {
       this.subscription.forEach(sub => sub.unsubscribe());
       this.subscription = [];
     }
+  }
+
+  deleteVideoLog(id: number) {
+    this.videoLogService.deleteVideoLog(id).subscribe(
+      response => {
+        this.videoTotalTime = 0;
+        this.videoLogsLogic.get(this.logsDate.value.toLocaleString());
+      }
+    )
   }
 }

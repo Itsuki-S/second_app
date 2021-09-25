@@ -31,6 +31,13 @@ export class VideoLogService {
     )
   }
 
+  public deleteVideoLog(id: number): Observable<any> {
+    return this.httpClient.delete(
+      environment.apiUrl+'/video_logs/'+id,
+      { headers: this.setHeader(), observe: 'response' }
+    )
+  }
+
   private setHeader() {
     return new HttpHeaders().set('content-type','application/json').set('access-token', this.cookieService.get('access-token')).set('uid', this.cookieService.get('uid')).set('client', this.cookieService.get('client'))
   }

@@ -12,18 +12,26 @@
   .video-log-card {
     margin: 0 20px 20px;
 
-    .oval {
-      width: 180px;
-      height: 32px;
-      background: rgb(54, 175, 125);
-      border-radius: 40px;
-      margin: 0 auto 10px;
-      text-align: center;
-      
-      h2 {
-        margin: 0;
-        font-weight: bold;
-        color: #fff;
+    .video-log-card-header {
+      display: flex;
+
+      .oval {
+        width: 180px;
+        height: 32px;
+        background: rgb(54, 175, 125);
+        border-radius: 40px;
+        margin-bottom: 10px;
+        text-align: center;
+        
+        h2 {
+          margin: 0;
+          font-weight: bold;
+          color: #fff;
+        }
+      }
+
+      .delete-btn {
+        margin-left: auto;
       }
     }
 

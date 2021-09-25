@@ -15,10 +15,15 @@
   </div>
   <div class="video-log-sector" *ngFor="let videoLog of videoLogs">
     <mat-card class="video-log-card">
-      <div *ngIf=videoLog.is_recommended>
-        <div class="oval" mat-color="primary">
-          <h2>オススメ！</h2>
+      <div class="video-log-card-header">
+        <div *ngIf=videoLog.is_recommended>
+          <div class="oval" mat-color="primary">
+            <h2>オススメ！</h2>
+          </div>
         </div>
+        <button mat-stroked-button class="delete-btn" type="button" color="accent" (click)="deleteVideoLog(videoLog.id)">
+          このログを削除する
+        </button>
       </div>
       <div class="video-log-content">
         <a href="{{videoLog.youtube_url}}" target="_blank">

@@ -49,6 +49,12 @@ module Api
         end
       end
 
+      def destroy
+        video_log = current_api_v1_user.video_logs.find(params[:id])
+        video_log.destroy
+        render json: { status: 'SUCCESS', message: 'Log deleted' }
+      end
+
       private
 
         def video_logs_params
