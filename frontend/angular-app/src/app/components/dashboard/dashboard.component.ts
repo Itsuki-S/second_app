@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.logChartLogic.data$.subscribe(
       result => {
         this.chartData = [
-          {name: "視聴時間(H)", series: result}
+          {name: "視聴時間(H)", series: result.reverse()}
         ]
       }
     )
