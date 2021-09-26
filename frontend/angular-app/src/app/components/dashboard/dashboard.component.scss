@@ -2,7 +2,11 @@
   margin: 20px;
 }
 
-.dashboard-card {
+h1, h2{
+  font-weight: bolder;
+}
+
+.chart-card, .recommendation-logs {
   position: absolute;
   top: 15px;
   left: 15px;
@@ -10,12 +14,11 @@
   bottom: 15px;
 }
 
-.more-button {
-  position: absolute;
-  top: 5px;
-  right: 10px;
-}
+.recommendation-logs-content {
+  display: flex;
+  overflow-x: scroll;
 
-.dashboard-card-content {
-  text-align: center;
+  .recommendation-log-card{
+    margin:0 10px 10px;
+  }
 }

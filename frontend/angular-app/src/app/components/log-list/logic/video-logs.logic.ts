@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { VideoLog } from '../models/videoLog';
+import { VideoLog } from '../../../models/videoLog';
 import { VideoLogService } from 'src/app/services/video-log.service';
 import { Observable, Subject } from 'rxjs';
 

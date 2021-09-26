@@ -24,10 +24,16 @@ export class VideoLogService {
     )
   }
 
-  public getUserVideoLogs(date_str: string): Observable<any> {
+  public getUserVideoLogs(date_str: string = ""): Observable<any> {
     return this.httpClient.get(
       environment.apiUrl+'/video_logs',
       { headers: this.setHeader(), params: {date_param: date_str}, observe: 'response' }
+    )
+  }
+  public getRecommendedVideoLogs(): Observable<any> {
+    return this.httpClient.get(
+      environment.apiUrl+'/recommended_video_logs',
+      { headers: this.setHeader(), observe: 'response' }
     )
   }
 

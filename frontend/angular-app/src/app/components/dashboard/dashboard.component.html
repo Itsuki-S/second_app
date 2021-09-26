@@ -1,24 +1,49 @@
 <div class="grid-container">
-  <h1 class="mat-h1">Dashboard</h1>
-  <mat-grid-list cols="2" rowHeight="350px">
-    <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
-      <mat-card class="dashboard-card">
+  <h1 class="mat-h1">ダッシュボード</h1>
+  <mat-grid-list cols="1" rowHeight="600px">
+    <mat-grid-tile>
+      <mat-card class="chart-card">
         <mat-card-header>
           <mat-card-title>
-            {{card.title}}
-            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu" xPosition="before">
-              <button mat-menu-item>Expand</button>
-              <button mat-menu-item>Remove</button>
-            </mat-menu>
+            <h1>
+              1週間の視聴時間の推移
+            </h1>
           </mat-card-title>
         </mat-card-header>
-        <mat-card-content class="dashboard-card-content">
-          <div>Card Content Here</div>
+        <mat-card-content class="chart-card-content">
+          <ngx-charts-line-chart
+            [view]="view"
+            [legend]="legend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxis]="xAxis"
+            [yAxis]="yAxis"
+            [yAxisLabel]="yAxisLabel"
+            [timeline]="timeline"
+            [roundDomains]="roundDomains"
+            [results]="chartData"
+            >
+          </ngx-charts-line-chart>
         </mat-card-content>
       </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div class="recommendation-logs">
+        <h1>みんなのおすすめ動画</h1>
+        <div class="recommendation-logs-content">
+          <div *ngFor="let videoLog of videoLogs">
+            <mat-card class="recommendation-log-card">
+              <div class="youtube-player">
+                <youtube-player [height]=playerHeight [width]=playerWidth videoId="{{videoLog.youtube_id}}"></youtube-player>
+              </div>
+              <mat-card-content>
+                <h2>コメント</h2>
+                <p>{{videoLog.note}}</p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
     </mat-grid-tile>
   </mat-grid-list>
 </div>

@@ -8,7 +8,8 @@ export class VideoLog {
     public youtube_duration: number,
     public youtube_duration_str: string,
     public note: string,
-    public is_recommended: boolean
+    public is_recommended: boolean,
+    public created_at: Date
   ) {}
 
   public static fromJson(jsonObject: any): VideoLog {
@@ -36,7 +37,8 @@ export class VideoLog {
       jsonObject.youtube_duration,
       duration_str,
       jsonObject.note,
-      jsonObject["is_recommended?"]
+      jsonObject["is_recommended?"],
+      jsonObject.created_at
     );
   }
 }

@@ -10,14 +10,14 @@ module Api
                        date = params[:date_param].in_time_zone
                        current_api_v1_user.video_logs.where(created_at: date.all_day).order(created_at: :desc)
                      else
-                       current_api_v1_user.video_logs.order(created_at: :desc)
+                       current_api_v1_user.video_logs.where(created_at: (Time.zone.now.beginning_of_day - 6.days)..Time.zone.now).order(created_at: :desc)
                      end
-        render json: { status: 'SUCCESS', message: 'Loaded logs', data: video_logs }
+        render json: { status: 'SUCCESS', message: 'Loaded user logs', data: video_logs }
       end
 
       def recommended_video_logs
-        recommended_video_logs = VideoLog.where(is_recommended?: true).order(created_at: :desc)
-        render json: { status: 'SUCCESS', message: 'Loaded logs', data: recommended_video_logs }
+        recommended_video_logs = VideoLog.where(is_recommended?: true).limit(20).order(created_at: :desc)
+        render json: { status: 'SUCCESS', message: 'Loaded recommended logs', data: recommended_video_logs }
       end
 
       def create

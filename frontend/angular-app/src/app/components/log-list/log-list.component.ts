@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { VideoLog } from './models/videoLog';
+import { VideoLog } from '../../models/videoLog';
 import { VideoLogsLogic } from './logic/video-logs.logic';
 import { VideoLogService } from 'src/app/services/video-log.service';
 
