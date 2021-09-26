@@ -38,11 +38,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.logChartLogic.data$.subscribe(
       result => {
-        console.log(result)
         this.chartData = [
           {name: "視聴時間(H)", series: result}
         ]
-        console.log(window.innerWidth)
       }
     )
     this.logChartLogic.get()

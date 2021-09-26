@@ -22,6 +22,7 @@ import { LoginRegisterComponent } from './components/account/login-register/logi
 import { PanelComponent } from './components/panel/panel.component';
 import { LogRegisterComponent } from './components/log-register/log-register.component';
 import { LogListComponent } from './components/log-list/log-list.component';
+import { HelpComponent } from './components/help/help.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { LogListComponent } from './components/log-list/log-list.component';
     PanelComponent,
     LogRegisterComponent,
     LogListComponent,
+    HelpComponent,
   ],
   imports: [
     AppRoutingModule,
