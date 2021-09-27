@@ -25,10 +25,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   showYAxisLabel: boolean = true;
   showXAxisLabel: boolean = false;
   yAxisLabel: string = '視聴時間(H)';
+  yScaleMin: number = 0;
+  yScaleMax: number = 24;
   timeline: boolean = true;
-  colorScheme   = {
-    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
-  };
 
   constructor(
     private videoLogService: VideoLogService,
@@ -39,7 +38,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.logChartLogic.data$.subscribe(
       result => {
         this.chartData = [
-          {name: "視聴時間(H)", series: result.reverse()}
+          {name: "視聴時間(H)", series: result}
         ]
       }
     )

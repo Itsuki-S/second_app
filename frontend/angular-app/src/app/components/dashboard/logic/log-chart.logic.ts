@@ -18,10 +18,10 @@ export class LogChartLogic {
   public get() {
     let today = new Date()
     let videoLogs: any[] = [];
-    for (let i = 0; i < 7; i++) {
+    for (let i = 6; i >= 0; i--) {
       videoLogs.push(
         {
-          name: new Date(today.getFullYear(), today.getMonth(), today.getDate() - i).toLocaleDateString('jn-JP', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
+          name: new Date(today.getFullYear(), today.getMonth(), today.getDate() - i).toLocaleDateString('jp-JP', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
           value: 0}
         )
     }
@@ -29,7 +29,7 @@ export class LogChartLogic {
     this.apiService.getUserVideoLogs().subscribe(result => {
       let logs = result.body.data
       for (let i = 0; i < logs.length; i++) {
-        let day =new Date(logs[i].created_at).toLocaleDateString('jn-JP', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+        let day =new Date(logs[i].created_at).toLocaleDateString('jp-JP', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
         videoLogs.forEach(date => {
           if(date.name == day){date.value += logs[i].youtube_duration/3600}
         })
