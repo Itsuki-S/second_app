@@ -37,7 +37,7 @@ RSpec.describe 'Api::V1::VideoLogs', type: :request do
       it 'status 200が返されること' do
         logic_mock = instance_double(VideoLogsLogic::Create)
         allow(VideoLogsLogic::Create).to receive(:new).and_return(logic_mock)
-        allow(logic_mock).to receive(:run).and_return({})
+        allow(logic_mock).to receive(:run).and_return({ succeeded_logs: ['video_log'], failed_logs: [] })
 
         post '/api/v1/video_logs', headers: auth_headers, params: {
           video_logs: [
@@ -52,7 +52,7 @@ RSpec.describe 'Api::V1::VideoLogs', type: :request do
       it 'status 400が返されること' do
         logic_mock = instance_double(VideoLogsLogic::Create)
         allow(VideoLogsLogic::Create).to receive(:new).and_return(logic_mock)
-        allow(logic_mock).to receive(:run).and_return({ errors: {} })
+        allow(logic_mock).to receive(:run).and_return({ succeeded_logs: [], failed_logs: ['video_log'] })
 
         post '/api/v1/video_logs', headers: auth_headers, params: {
           video_logs: [

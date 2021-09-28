@@ -10,6 +10,7 @@ RSpec.describe 'VideoLogsLogic::Create' do
     Google::Apis::YoutubeV3::ListVideosResponse.new(
       items: [
         Google::Apis::YoutubeV3::Video.new(
+          id: 'testtesttest',
           content_details: Google::Apis::YoutubeV3::VideoContentDetails.new(
             duration: 'PT2M42S'
           ),
@@ -24,11 +25,13 @@ RSpec.describe 'VideoLogsLogic::Create' do
     Google::Apis::YoutubeV3::ListVideosResponse.new(items: [])
   }
   let(:params) {
-    {
-      youtube_url: 'https://www.youtube.com/watch?v=testtesttest',
-      is_recommended?: true,
-      note: 'This is nice one'
-    }
+    [
+      {
+        youtube_url: 'https://www.youtube.com/watch?v=testtesttest',
+        is_recommended?: true,
+        note: 'This is nice one'
+      }
+    ]
   }
 
   describe '#run' do
@@ -44,9 +47,9 @@ RSpec.describe 'VideoLogsLogic::Create' do
         expect { logic.run(params) }.to change(VideoLog, :count).by(1)
       end
 
-      it '返り値にエラーが含まれないこと' do
+      it '返り値にがfailure_logが含まれないこと' do
         result = logic.run(params)
-        expect(result[:errors]).to eq nil
+        expect(result[:failed_logs].length).to eq(0)
       end
     end
 
@@ -62,9 +65,15 @@ RSpec.describe 'VideoLogsLogic::Create' do
         expect { logic.run(params) }.to change(VideoLog, :count).by(0)
       end
 
+      it '返り値にfailure_logが含まれること' do
+        result = logic.run(params)
+        expect(result[:failed_logs].length).to eq(1)
+      end
+
       it '返り値にエラーが含まれること' do
         result = logic.run(params)
-        expect(result[:errors]).to eq({ youtube_url: ['Video not found'] })
+        failed_log = result[:failed_logs].first
+        expect(failed_log[:errors]).to eq({ youtube_url: ['Video not found'] })
       end
     end
   end

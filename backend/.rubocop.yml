@@ -78,7 +78,7 @@ Layout/LineLength:
 Metrics/AbcSize:
   Exclude:
     - 'lib/tasks/dev.rake'
-  Max: 25
+  Max: 40
 
 Metrics/BlockLength:
   CountComments: false

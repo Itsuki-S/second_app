@@ -13,28 +13,39 @@ module VideoLogsLogic
       @service.key = GOOGLE_API_KEY
     end
 
-    def run(params)
-      video_log = @current_user.video_logs.build(params)
-      # youtube動画のid取得
-      video_log.setting_youtube_id(params[:youtube_url])
-      # youtube APIの呼び出しとレスポンスの代入
-      response = @service.list_videos('snippet, contentDetails', id: video_log.youtube_id)
+    def run(video_logs_params)
+      succeeded_logs = []
+      failed_logs = []
+      video_logs = []
+      video_ids = []
+      video_logs_params.each do |params|
+        video_log = @current_user.video_logs.build(params)
+        # youtube動画のid取得
+        video_log.setting_youtube_id(params[:youtube_url])
+        video_ids << video_log.youtube_id
+        video_logs << video_log
+      end
+      # 投稿されたyoutube_idを1つにまとめてリクエストする
+      response = @service.list_videos('snippet, contentDetails', id: video_ids)
 
-      # レスポンスが空である場合はfailureに入れる
-      if response.items.empty?
-        return { video_log: video_log, errors: { youtube_url: ['Video not found'] } }
+      i = 0
+      video_logs.each do |video_log|
+        item = response.items[i]
+        if item.nil? || video_log.youtube_id != item.id
+          failed_logs << { video_log: video_log, errors: { youtube_url: ['Video not found'] } }
+        else
+          video_log.duration(item.content_details.duration)
+          video_log.youtube_title = item.snippet.title
+          if video_log.save
+            succeeded_logs << { video_log: video_log }
+          else
+            failed_logs << { video_log: video_log, errors: video_log.errors }
+          end
+          i += 1
+        end
       end
 
-      # 動画時間と動画タイトルの代入
-      video_log.duration(response.items[0].content_details.duration)
-      video_log.youtube_title = response.items[0].snippet.title
-
-      # 保存
-      if video_log.save
-        { video_log: video_log }
-      else
-        { video_log: video_log, errors: video_log.errors }
-      end
+      { succeeded_logs: succeeded_logs, failed_logs: failed_logs }
     end
   end
 end

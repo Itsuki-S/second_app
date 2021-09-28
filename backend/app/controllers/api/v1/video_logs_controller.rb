@@ -21,29 +21,20 @@ module Api
       end
 
       def create
-        succeeded_logs = []
-        failed_logs = []
-        video_logs_params.each do |params|
-          logic = VideoLogsLogic::Create.new(current_api_v1_user)
-          result = logic.run(params)
-          if result[:errors].nil?
-            succeeded_logs << result
-          else
-            failed_logs << result
-          end
-        end
+        logic = VideoLogsLogic::Create.new(current_api_v1_user)
+        result = logic.run(video_logs_params)
 
-        if failed_logs.empty?
+        if result[:failed_logs].empty?
           render status: :ok, json: {
             status: 200,
-            data: { success: succeeded_logs }
+            data: { success: result[:succeeded_logs] }
           }
         else
           render status: :bad_request, json: {
             status: 400,
             data: {
-              success: succeeded_logs,
-              failure: failed_logs
+              success: result[:succeeded_logs],
+              failure: result[:failed_logs]
             }
           }
         end
