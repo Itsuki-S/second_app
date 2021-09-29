@@ -114,7 +114,7 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
-  config.action_mailer.default_url_options = { host: 'http://ec2-35-75-152-184.ap-northeast-1.compute.amazonaws.com:3000' }
+  config.action_mailer.default_url_options = { host: 'ec2-35-75-152-184.ap-northeast-1.compute.amazonaws.com:3000' }
   config.action_mailer.default_options = { from: ENV['EMAIL_ADDRESS'] }
   config.action_mailer.delivery_method = :smtp
   config.hosts << "ec2-35-75-152-184.ap-northeast-1.compute.amazonaws.com"
