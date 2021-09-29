@@ -9,7 +9,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'localhost:4200'
+    origins 'localhost:4200', 'http://ec2-35-75-152-184.ap-northeast-1.compute.amazonaws.com'
     resource '*',
              headers: :any,
              expose: %w[access-token expiry token-type uid client],
