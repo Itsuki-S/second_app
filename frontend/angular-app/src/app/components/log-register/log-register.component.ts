@@ -41,8 +41,6 @@ export class LogRegisterComponent implements OnInit {
       "note": '',
       "is_recommended?": false
     }));
-    console.log(this.videoLogsForm.value)
-    console.log(this.videoLogsForm.value['video_logs'].filter((log :any) => log.youtube_url != ''))
     this.cdr.detectChanges();
   }
 
