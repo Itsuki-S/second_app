@@ -1,19 +1,20 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { VideoLog } from '../../models/videoLog';
 import { LogChartLogic } from './logic/log-chart.logic';
 import { VideoLogService } from 'src/app/services/video-log.service';
+import { YouTubePlayer } from '@angular/youtube-player';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class DashboardComponent implements OnInit {
   public videoLogs: VideoLog[];
   public chartData: any[]
   public playerHeight: number = 270;
   public playerWidth: number = 420;
-  view: [number, number] = [window.innerWidth-250, 550];
+  private playingId: number
 
   // options
   legend: boolean = false;
@@ -28,6 +29,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   yScaleMin: number = 0;
   yScaleMax: number = 24;
   timeline: boolean = true;
+
+  @ViewChildren(YouTubePlayer) viewChildren!: QueryList<YouTubePlayer>;
 
   constructor(
     private videoLogService: VideoLogService,
@@ -55,7 +58,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     document.body.appendChild(tag);
   }
 
-  ngOnDestroy(): void{
-
+  videoStateChange(event: YT.OnStateChangeEvent, i: number) {
+    if (event.data == 1) {
+      if (this.playingId != undefined) {
+        this.viewChildren.get(this.playingId)?.pauseVideo()
+      }
+      this.playingId = i
+    }
   }
 }

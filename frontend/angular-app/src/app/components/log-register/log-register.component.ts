@@ -41,6 +41,8 @@ export class LogRegisterComponent implements OnInit {
       "note": '',
       "is_recommended?": false
     }));
+    console.log(this.videoLogsForm.value)
+    console.log(this.videoLogsForm.value['video_logs'].filter((log :any) => log.youtube_url != ''))
     this.cdr.detectChanges();
   }
 
@@ -49,29 +51,35 @@ export class LogRegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.videoLogService.createNewVideoLogs(this.videoLogsForm.value).subscribe(
-      success => {
-        this.videoLogsForm = this.formBuilder.group({
-          video_logs: this.formBuilder.array([])
-        });
-        this.addVideoLogForm();
-        this.openSnackBar('全てのログが登録されました')
-      },
-      error => {
-        this.videoLogsForm = this.formBuilder.group({
-          video_logs: this.formBuilder.array([])
-        });
-        error.error.data.failure.forEach((element: any) => {
-          this.videoLogs.push(this.formBuilder.group({
-            "youtube_url": element.video_log.youtube_url,
-            "note": element.video_log.note,
-            "is_recommended?": element.video_log['is_recommended?']
-          }));
-        });
-        console.log(error.error.data.failure[0].video_log.youtube_url)
-        this.errorSnackBar('登録に失敗したログがあります、URLを見直してください');
-      }
+    let video_logs :Array<any> = this.videoLogsForm.value['video_logs'].filter((log :any) =>
+      log.youtube_url != ''
     )
+    if (video_logs.length == 0) {
+      this.errorSnackBar('Youtube URLを入力してください');
+    } else {
+      this.videoLogService.createNewVideoLogs({video_logs: video_logs}).subscribe(
+        success => {
+          this.videoLogsForm = this.formBuilder.group({
+            video_logs: this.formBuilder.array([])
+          });
+          this.addVideoLogForm();
+          this.openSnackBar('全てのログが登録されました')
+        },
+        error => {
+          this.videoLogsForm = this.formBuilder.group({
+            video_logs: this.formBuilder.array([])
+          });
+          error.error.data.failure.forEach((element: any) => {
+            this.videoLogs.push(this.formBuilder.group({
+              "youtube_url": element.video_log.youtube_url,
+              "note": element.video_log.note,
+              "is_recommended?": element.video_log['is_recommended?']
+            }));
+          });
+          this.errorSnackBar('登録に失敗したログがあります、URLを見直してください');
+        }
+      )
+    }
   }
 
   openSnackBar(message: string) {

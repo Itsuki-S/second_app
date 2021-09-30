@@ -10,9 +10,9 @@
             </h1>
           </mat-card-title>
         </mat-card-header>
-        <mat-card-content class="chart-card-content">
+        <mat-card-content #containerRef class="chart-card-content">
           <ngx-charts-line-chart
-            [view]="view"
+            [view]="[containerRef.offsetWidth*0.95, 550]"
             [legend]="legend"
             [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel"
@@ -33,10 +33,11 @@
       <div class="recommendation-logs">
         <h1>みんなのおすすめ動画</h1>
         <div class="recommendation-logs-content">
-          <div *ngFor="let videoLog of videoLogs">
+          <div *ngFor="let videoLog of videoLogs; let i = index">
             <mat-card class="recommendation-log-card">
               <div class="youtube-player">
-                <youtube-player [height]=playerHeight [width]=playerWidth videoId="{{videoLog.youtube_id}}"></youtube-player>
+                <youtube-player [height]=playerHeight [width]=playerWidth videoId="{{videoLog.youtube_id}}"
+                (stateChange)="videoStateChange($event, i)"></youtube-player>
               </div>
               <mat-card-content>
                 <h2>コメント</h2>

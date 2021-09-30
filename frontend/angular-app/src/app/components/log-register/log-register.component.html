@@ -9,9 +9,11 @@
               <mat-label>Youtube URL</mat-label>
               <input matInput type="text" 
               formControlName="youtube_url" 
-              required 
-              pattern="https?://[\w!\?/\+\-_~=;\.,\*&@#\$%\(\)'\[\]]+"
+              pattern="https?://(youtu.be|www.youtube.com)/[\w!\?/\+\-_~=;\.,\*&@#\$%\(\)'\[\]]+"
               >
+              <div class="error-message" *ngIf="videoLog.invalid">
+                無効なYoutube URLです
+              </div>
             </mat-form-field>
             <mat-checkbox formControlName="is_recommended?">
               他人におすすめする

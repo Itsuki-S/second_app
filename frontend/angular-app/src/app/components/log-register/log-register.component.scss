@@ -16,6 +16,18 @@
       .url {
         margin-top: 20px;
         width: 50%;
+         
+        input {
+          font-size: large;
+        }
+
+        .error-message {
+          padding-top: 10px;
+          text-align: end;
+          color: red;
+          opacity: 0.8;
+          font-size: smaller;
+        }
       }
 
       .mat-checkbox{
